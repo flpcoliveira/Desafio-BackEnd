@@ -1,0 +1,23 @@
+services:
+  motorentmanager.api:
+    image: ${DOCKER_REGISTRY-}motorentmanagerapi
+    build:
+      context: .
+      dockerfile: MotoRentManager.API/Dockerfile
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-motorent    
+    restart: always 
+    ports:
+        - 5672:5672
+        - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+  db:
+    image: postgres
+    environment:
+        POSTGRES_USER: motorentuser
+        POSTGRES_PASSWORD: motorent@123
+    ports:
+        - "5432:5432"
